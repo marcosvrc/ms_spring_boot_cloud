@@ -18,12 +18,6 @@ public class PaymentService {
     @Autowired
     private WorkerClient workerClient;
 
-    @Value("${hr-worker.host}")
-    private String workerHost;
-
-    @Value("${hr-worker.path-get-workers}")
-    private String pathGetWorkers;
-
     public Payment getPayment(long workerId, int days) {
 
         ResponseEntity<WorkerVO> responseWorkerVO = workerClient.findById(workerId);

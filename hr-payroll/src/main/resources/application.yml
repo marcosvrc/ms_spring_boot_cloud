@@ -6,5 +6,6 @@ spring:
     name: hr-payroll
 
 hr-worker:
-  host: http://localhost:8001
   path-get-workers: /workers/{id}
+  ribbon:
+    listOfServers: localhost:8001, localhost:8002
