@@ -9,7 +9,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Payment implements Serializable {
 
-    private String name;
+	private static final long serialVersionUID = 1368343902697355189L;
+	
+	private String name;
     private Double dailyInCome;
     private Integer days;
 

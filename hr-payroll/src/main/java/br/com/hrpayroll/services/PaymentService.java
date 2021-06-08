@@ -1,22 +1,18 @@
 package br.com.hrpayroll.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import br.com.hrpayroll.clients.WorkerClient;
 import br.com.hrpayroll.entities.Payment;
 import br.com.hrpayroll.vo.WorkerVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class PaymentService {
 
     @Autowired
-    private WorkerClient workerClient;
+    private WorkerClient workerClient;	
 
     public Payment getPayment(long workerId, int days) {
 
