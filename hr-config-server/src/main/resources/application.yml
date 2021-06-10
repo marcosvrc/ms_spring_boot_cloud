@@ -1,1 +1,13 @@
-
+spring:
+  application:
+    name: hr-config-server
+    
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: https://github.com/marcosvrc/ms_spring_boot_cloud_config
+    
+server:
+  port: 8888
