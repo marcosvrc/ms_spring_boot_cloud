@@ -11,7 +11,7 @@
 	<groupId>br.com</groupId>
 	<artifactId>hr-api-gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hr-api-gateay</name>
+	<name>hr-api-gateway</name>
 	<description>Zuul Server</description>
 	<properties>
 		<java.version>11</java.version>
