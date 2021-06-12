@@ -7,5 +7,6 @@ spring:
       uri: http://localhost:8888
       
   profile:
-    active=test
+    active: test
 
+management:  endpoints:    web:      exposure:        include: "*"
