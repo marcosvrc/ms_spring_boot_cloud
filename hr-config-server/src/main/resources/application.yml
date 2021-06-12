@@ -8,6 +8,11 @@ spring:
         git:
           default-label: main
           uri: https://github.com/marcosvrc/ms_spring_boot_cloud_config
+          
+          username: ${GITHUB_USER}
+          password: ${GITHUB_PASS}
     
 server:
   port: 8888
+  
+  
