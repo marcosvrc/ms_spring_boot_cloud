@@ -12,6 +12,9 @@ spring:
       enabled: true
       path: /h2-console
 
+server:
+  port: ${PORT:0}
+
 eureka:
   client:
     service-url:
