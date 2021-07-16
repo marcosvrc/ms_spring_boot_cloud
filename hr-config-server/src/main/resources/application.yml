@@ -1,6 +1,13 @@
 spring:
   application:
     name: hr-config-server
+
+  zipkin:
+    base-url: http://localhost:9411
+
+  sleuth:
+    sampler:
+      probability: 1.0
     
   cloud:
     config:
@@ -9,8 +16,8 @@ spring:
           default-label: main
           uri: https://github.com/marcosvrc/ms_spring_boot_cloud_config
           
-          username: ${GITHUB_USER}
-          password: ${GITHUB_PASS}
+          username: marcosvrc
+          password: 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
     
 server:
   port: 8888
