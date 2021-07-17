@@ -1,7 +1,10 @@
 package br.com.hrapigateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
@@ -9,6 +12,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableResourceServer
@@ -22,6 +32,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private static final String[] ADMIN = {"/hr-payroll/**", "/hr-user/**",
             "/actuator/**", "hr-worker/actuator/**", "hr-oauth/actuator/**"};
 
+    private static final List<String> ALLOWED_METHODS = Arrays.asList("POST", "GET", "PUT", "DELETE");
+    private static final List<String> ALLOWED_HEADERS = Arrays.asList("Authorization", "Content-Type");
+    private static final List<String> ALLOWED_ORIGINS = Arrays.asList("*");
+    private static final String REGISTER_CORS_PATH = "/**";
+
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore);
     }
@@ -32,6 +47,30 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, OPERATOR).hasAnyRole("OPERATOR", "ADMIN")
                 .antMatchers(ADMIN).hasRole("ADMIN")
                 .anyRequest().authenticated();
+
+        http.cors().configurationSource(corsConfigurationSource());
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(ALLOWED_ORIGINS);
+        corsConfiguration.setAllowedMethods(ALLOWED_METHODS);
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedHeaders(ALLOWED_HEADERS);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration(REGISTER_CORS_PATH, corsConfiguration);
+
+        return source;
+    }
+
+    @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilter(){
+        FilterRegistrationBean<CorsFilter> bean =
+                new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
     }
 
 
