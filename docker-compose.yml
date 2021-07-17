@@ -1,0 +1,32 @@
+version: '3'
+
+services: 
+  db-worker:
+    restart: always
+    container_name: hr-worker-pg12
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: db_hr_worker
+    ports:
+      - "5432:5432"
+    networks:
+      - hr-net
+  
+  db-user:
+    restart: always
+    container_name: hr-user-pg12
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: db_hr_user
+    ports:
+      - "5433:5432"
+    networks:
+      - hr-net
+
+networks: 
+  hr-net:
+    driver: bridge

@@ -1,8 +1,7 @@
 package br.com.hrworker.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.com.hrworker.entities.Worker;
+import br.com.hrworker.repositories.WorkerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hrworker.entities.Worker;
-import br.com.hrworker.repositories.WorkerRepository;
+import java.util.List;
+import java.util.Optional;
 
 @RefreshScope
 @RestController
@@ -24,6 +23,9 @@ import br.com.hrworker.repositories.WorkerRepository;
 public class WorkerController {
 
     private static Logger log = LoggerFactory.getLogger(WorkerController.class);
+
+    @Value("${spring.datasource.url}")
+    private String jwtSecret;
 
     @Autowired
     private Environment environment;
@@ -33,6 +35,7 @@ public class WorkerController {
 
     @GetMapping
     public ResponseEntity<List<Worker>> findAll() {
+        log.info(jwtSecret);
         List<Worker> list = repository.findAll();
         return ResponseEntity.ok(list);
 
