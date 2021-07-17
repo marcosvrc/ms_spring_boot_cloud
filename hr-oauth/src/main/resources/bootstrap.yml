@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: hr-oauth
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      
+  profile:
+    active: test
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
