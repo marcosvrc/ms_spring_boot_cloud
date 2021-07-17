@@ -9,8 +9,8 @@ spring:
           default-label: main
           uri: https://github.com/marcosvrc/ms_spring_boot_cloud_config
           
-          username: marcosvrc
-          password: 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
+          username:
+          password: 
     
 server:
   port: 8888
