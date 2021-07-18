@@ -1,0 +1,52 @@
+version: '3'
+
+services: 
+  db-worker:
+    restart: always
+    container_name: hr-worker-pg12
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: db_hr_worker
+    ports:
+      - "5432:5432"
+    networks:
+      - hr-net
+  
+  db-user:
+    restart: always
+    container_name: hr-user-pg12
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: db_hr_user
+    ports:
+      - "5433:5432"
+    networks:
+      - hr-net
+
+  ms-config-server:
+    container_name: hr-config-server
+    image: hr-config-server:v1
+    environment: 
+      GITHUB_USER:
+      GITHUB_PASS:
+    ports: 
+      - "8888:8888"
+    networks: 
+      - hr-net
+  
+  ms-eureka-server:
+    container_name: hr-eureka-server
+    image: hr-eureka-server:v1
+    ports: 
+      - "8761:8761"
+    networks: 
+      - hr-net
+
+networks:
+  hr-net:
+    external: 
+      name: hr-net

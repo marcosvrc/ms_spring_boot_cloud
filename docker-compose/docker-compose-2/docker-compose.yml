@@ -1,0 +1,40 @@
+version: '3'
+
+services: 
+  
+  ms-api-gateway:
+    container_name: hr-api-gateway
+    image: hr-api-gateway:v1
+    ports: 
+      - "8765:8765"
+    networks: 
+      - hr-net
+
+  ms-user:
+    container_name: hr-user
+    image: hr-user:v1
+    networks: 
+      - hr-net
+
+  ms-oauth:
+    container_name: hr-oauth
+    image: hr-oauth:v1
+    networks: 
+      - hr-net
+
+  ms-worker:
+    container_name: hr-worker
+    image: hr-worker:v1
+    networks: 
+      - hr-net
+
+  ms-payroll:
+    container_name: hr-payroll
+    image: hr-payroll:v1
+    networks: 
+      - hr-net
+
+networks:
+  hr-net:
+    external: 
+      name: hr-net
