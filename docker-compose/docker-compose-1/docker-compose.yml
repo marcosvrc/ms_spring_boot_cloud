@@ -27,6 +27,26 @@ services:
     networks:
       - hr-net
 
-networks: 
+  ms-config-server:
+    container_name: hr-config-server
+    image: hr-config-server:v1
+    environment: 
+      GITHUB_USER:
+      GITHUB_PASS:
+    ports: 
+      - "8888:8888"
+    networks: 
+      - hr-net
+  
+  ms-eureka-server:
+    container_name: hr-eureka-server
+    image: hr-eureka-server:v1
+    ports: 
+      - "8761:8761"
+    networks: 
+      - hr-net
+
+networks:
   hr-net:
-    driver: bridge
+    external: 
+      name: hr-net
